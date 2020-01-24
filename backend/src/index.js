@@ -1,9 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
 const routes = require('./routes');
+const { setupWebsocket } = require('./websocket');
 
 const app = express();
+const server = http.Server(app);
+
+setupWebsocket(server);
 
 mongoose.connect('mongodb+srv://thiago:TfxJJatneTP8jUde@cluster0-p5lda.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -24,4 +29,4 @@ app.use(routes);
 //MongoDB (Não-relacional) - Extremamento perfomático
 
 
-app.listen(3333);
+server.listen(3333);
